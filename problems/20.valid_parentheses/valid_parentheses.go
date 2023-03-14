@@ -1,34 +1,42 @@
 package valid_parentheses
 
-func isValid(s string) bool {
-	// Kiểm tra chuỗi rỗng
-	if len(s) == 0 {
-		return true
-	}
+import (
+	"problems/structures"
+)
 
-	stack := make([]rune, 0)
-	for _, v := range s {
-		if v == '(' || v == '[' || v == '{' {
-			stack = append(stack, v)
+func isValid(s string) bool {
+	// Khởi tạo stack
+	l := len(s)
+	st := structures.NewStack(l)
+	for i := 0; i < l; i++ {
+		// Nếu s[i] == '(' thì thêm thẻ đóng ')' vào stack
+		if s[i] == '(' {
+			st.Push(')')
 			continue
 		}
 
-		l := len(stack)
+		// Nếu s[i] == '[' thì thêm thẻ đóng ']' vào stack
+		if s[i] == '[' {
+			st.Push(']')
+			continue
+		}
 
-		// Kiểm tra các điều kiện
-		// nếu v == ")" || "]" || "}"
-		// và l > 0
-		// và giá trị cuối cùng trong stack == "(" || "[" || "{"
-		// thì sẽ xoá stack từ đầu cho tới l-1
-		if (v == ')' && l > 0 && stack[l-1] == '(') ||
-			(v == ']' && l > 0 && stack[l-1] == '[') ||
-			(v == '}' && l > 0 && stack[l-1] == '{') {
-			stack = stack[:l-1]
-		} else {
-			return false
+		// Nếu s[i] == '{' thì thêm thẻ đóng '}' vào stack
+		if s[i] == '{' {
+			st.Push('}')
+			continue
+		}
+
+		// Kiểm tra nếu s[i] == ')' || ']' || '}'
+		// Thì lấy Pop trong stack và so sánh với s[i]
+		// nếu không thì trả về false
+		if s[i] == ')' || s[i] == ']' || s[i] == '}' {
+			if st.Pop() != s[i] {
+				return false
+			}
 		}
 	}
 
 	// Kiểm tra stack rỗng
-	return len(stack) == 0
+	return st.IsEmpty()
 }
