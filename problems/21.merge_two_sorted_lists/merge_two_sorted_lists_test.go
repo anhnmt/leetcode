@@ -69,24 +69,21 @@ func Test_mergeTwoLists(t *testing.T) {
 		{
 			name: "exam 2",
 			args: args{
-				list1: &structures.ListNode{},
-				list2: &structures.ListNode{},
+				list1: nil,
+				list2: nil,
 			},
-			want: &structures.ListNode{
-				Next: &structures.ListNode{},
-			},
+			want: nil,
 		},
 		{
 			name: "exam 3",
 			args: args{
-				list1: &structures.ListNode{},
+				list1: nil,
 				list2: &structures.ListNode{
 					Val: 0,
 				},
 			},
 			want: &structures.ListNode{
-				Val:  0,
-				Next: &structures.ListNode{},
+				Val: 0,
 			},
 		},
 	}
